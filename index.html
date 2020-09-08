@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            border: 2px dotted #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <script src="./index.js"></script>
+    <script>
+        //初始化
+        var sign = new Draw( {
+            // canvas:document.getElementById('canvas'),
+            lineWidth: 10, // 线条宽度
+            width: 400, // canvas 宽
+            height: 400, //canvas 高
+            strokeStyle: '#333333' // 线条颜色
+        } );
+        window.onload = function () {
+            // 点击输出图片
+            document.querySelector( '.ouput' ).onclick = function () {
+                var img = new Image();
+                img.style.width = '200px';
+                img.src = sign.ouput();
+                img.onload = function () {
+                    document.body.appendChild( img );
+                }
+                document.querySelector( 'img' ) && document.querySelector( 'img' ).remove();
+            }
+            // 点击清除
+            document.querySelector( '.clear' ).onclick = function () {
+                sign.clear();
+            }
+            // 点击撤销
+            document.querySelector( '.undo' ).onclick = function () {
+                sign.undo();
+            }
+        }
+    </script>
+    <div class="buttons">
+        <button type="button" class="btn btn-primary ouput">生成图片</button>
+        <button type="button" class="btn btn-light undo">撤销</button>
+        <button type="button" class="btn btn-light clear">清除画布</button>
+    </div>
+</body>
+
+</html>
