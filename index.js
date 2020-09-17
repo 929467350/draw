@@ -151,12 +151,13 @@
           value: function clear() {
               // 清除画布
               this.ctx.clearRect(0, 0, this.el.width, this.el.height);
+              this.state.undopath = [];
           }
       }, {
           key: 'undo',
           value: function undo() {
               // 撤销
-              this.clear();
+              this.ctx.clearRect(0, 0, this.el.width, this.el.height);
               this.state.undopath.splice(-1);
               --this.state.index;
               var undopath = this.state.undopath;
