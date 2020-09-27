@@ -154,6 +154,8 @@
             key: 'clear',
             value: function clear () {
                 // 清除画布
+                this.state.index = 0;
+                this.state.undopath = [];
                 this.ctx.clearRect( 0, 0, this.el.width, this.el.height );
             }
         }, {
