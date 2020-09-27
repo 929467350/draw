@@ -1,3 +1,8 @@
+/**
+ * 手写签字板
+ * @qq     929467350qq
+ * @github https://github.com/929467350/draw
+ */
 ( function ( global, factory ) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define( factory ) :
@@ -154,7 +159,7 @@
             key: 'clear',
             value: function clear () {
                 // 清除画布
-                this.state.index = 0;
+                this.state.index = -1;
                 this.state.undopath = [];
                 this.ctx.clearRect( 0, 0, this.el.width, this.el.height );
             }
