@@ -1,7 +1,11 @@
+/**
+    * @github       https://github.com/929467350/draw
+    * @description  手写签字版
+    */
 ( function ( global, factory ) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define( factory ) :
-        ( global = global || self, global.Draw = factory() );
+            ( global = global || self, global.Draw = factory() );
 }( this, ( function () {
     'use strict';
 
@@ -12,9 +16,9 @@
     };
 
     var createClass = function () {
-        function defineProperties( target, props ) {
+        function defineProperties ( target, props ) {
             for ( var i = 0; i < props.length; i++ ) {
-                var descriptor = props[ i ];
+                var descriptor = props[i];
                 descriptor.enumerable = descriptor.enumerable || false;
                 descriptor.configurable = true;
                 if ( "value" in descriptor ) descriptor.writable = true;
@@ -29,11 +33,11 @@
         };
     }();
 
-    var Draw = function () {
-        function Draw() {
-            var params = arguments.length > 0 && arguments[ 0 ] !== undefined ? arguments[ 0 ] : {};
-            classCallCheck( this, Draw );
 
+    var Draw = function () {
+        function Draw () {
+            var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            classCallCheck( this, Draw );
             this.el = params.el || document.createElement( 'canvas' );
             this.state = {
                 undopath: [],
@@ -62,15 +66,15 @@
             this.init();
         }
 
-        createClass( Draw, [ {
+        createClass( Draw, [{
             key: 'onStart',
-            value: function onStart() {
+            value: function onStart () {
                 ++this.state.index;
                 this.state.isStart = true;
             }
         }, {
             key: 'onMove',
-            value: function onMove( e ) {
+            value: function onMove ( e ) {
                 e.preventDefault();
                 if ( !this.state.isStart ) return;
                 var pos = this.pos( e );
@@ -84,34 +88,34 @@
                     this.ctx.stroke();
                 }
                 this.state.old = pos;
-                if ( this.state.undopath[ index ] ) {
-                    this.state.undopath[ index ].push( {
+                if ( this.state.undopath[index] ) {
+                    this.state.undopath[index].push( {
                         x: this.state.old.x,
                         y: this.state.old.y
                     } );
                 } else {
-                    this.state.undopath[ index ] = [ {
+                    this.state.undopath[index] = [{
                         x: this.state.old.x,
                         y: this.state.old.y,
                         strokeStyle: this.ctx.strokeStyle,
                         lineWidth: this.ctx.lineWidth
-                    } ];
+                    }];
                 }
             }
         }, {
             key: 'onEnd',
-            value: function onEnd() {
+            value: function onEnd () {
                 this.state.old = void 0;
                 this.state.isStart = false;
             }
         }, {
             key: 'pos',
-            value: function pos( e ) {
+            value: function pos ( e ) {
                 var x = 0,
                     y = 0;
                 if ( e.touches ) {
-                    x = e.touches[ 0 ].pageX;
-                    y = e.touches[ 0 ].pageY;
+                    x = e.touches[0].pageX;
+                    y = e.touches[0].pageY;
                 } else {
                     x = e.offsetX / 2;
                     y = e.offsetY / 2;
@@ -123,13 +127,13 @@
             }
         }, {
             key: 'ouput',
-            value: function ouput() {
+            value: function ouput () {
                 // 输出图片
                 return this.el.toDataURL();
             }
         }, {
             key: 'init',
-            value: function init() {
+            value: function init () {
                 // 绑定事件
                 var isTouch = this.state.isTouch;
 
@@ -140,7 +144,7 @@
             }
         }, {
             key: 'destroyed',
-            value: function destroyed() {
+            value: function destroyed () {
                 if ( this.el ) {
                     var isTouch = this.state.isTouch;
                     this.el.removeEventListener( isTouch ? 'touchstart' : 'mousedown', this.onStart.bind( this ) );
@@ -151,7 +155,7 @@
             }
         }, {
             key: 'clear',
-            value: function clear() {
+            value: function clear () {
                 // 清除画布
                 this.state.index = -1;
                 this.state.undopath = [];
@@ -159,20 +163,20 @@
             }
         }, {
             key: 'undo',
-            value: function undo() {
+            value: function undo () {
                 // 撤销
                 this.state.index >= 0 && --this.state.index;
-                var undopath = this.state.undopath;
                 this.state.undopath.pop();
+                var undopath = this.state.undopath;
                 this.ctx.clearRect( 0, 0, this.el.width, this.el.height );
-                if ( undopath ) {
+                if ( undopath.length>0) {   
                     this.ctx.beginPath();
                     for ( var z = 0; z < undopath.length; ++z ) {
-                        this.ctx.moveTo( undopath[ z ][ 0 ].x, undopath[ z ][ 0 ].y );
-                        this.ctx.lineWidth = undopath[ z ][ 0 ].lineWidth;
-                        this.ctx.strokeStyle = undopath[ z ][ 0 ].strokeStyle;
-                        for ( var i = 0; i < undopath[ z ].length; ++i ) {
-                            this.ctx.lineTo( undopath[ z ][ i ].x, undopath[ z ][ i ].y );
+                        this.ctx.moveTo( undopath[z][0].x, undopath[z][0].y );
+                        this.ctx.lineWidth = undopath[z][0].lineWidth;
+                        this.ctx.strokeStyle = undopath[z][0].strokeStyle;
+                        for ( var i = 0; i < undopath[z].length; ++i ) {
+                            this.ctx.lineTo( undopath[z][i].x, undopath[z][i].y );
                         }
                     }
                     this.ctx.stroke();
@@ -181,7 +185,7 @@
                     this.state.undopath = [];
                 }
             }
-        } ] );
+        }] );
         return Draw;
     }();
 
